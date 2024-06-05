@@ -5,7 +5,7 @@ const SplashScreen = () => {
   return (
     <View style={styles.container}>
       <Image
-        source={require("../../assets/images/AeroKonnectSplash.png")}
+        source={require("../../assets/AeroKonnect22.png")}
         style={styles.AeroKonnect}
       />
     </View>
