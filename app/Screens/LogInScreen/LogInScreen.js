@@ -44,6 +44,10 @@ const LogInScreen = () => {
           style={styles.input}
         />
 
+        <Text style={styles.Link} onPress={LogInPressed}>
+          Forgot your password?
+        </Text>
+
         <CustomButton
           text="Next"
           onPress={onSignUpPressed}
