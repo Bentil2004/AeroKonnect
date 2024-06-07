@@ -2,11 +2,10 @@ import React, { useState } from "react";
 import {
   Text,
   View,
-  Image,
   StyleSheet,
   SafeAreaView,
   ScrollView,
-  useWindowDimensions,
+  ImageBackground,
 } from "react-native";
 import CustomButton from "../../components/CustomButton";
 import CustomImageButton from "../../components/CustomImageButton";
@@ -16,13 +15,11 @@ const SignInScreen = () => {
   const [Username, setUsername] = useState("");
   const [Password, setPassword] = useState("");
 
-  const { height } = useWindowDimensions();
-
   const onSignUpPressed = () => {
     console.warn("Signup");
   };
 
-  const onForgotPasswordPressed = () => {
+  const onLogInPressed = () => {
     console.warn("Log In");
   };
 
@@ -39,60 +36,65 @@ const SignInScreen = () => {
   };
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <View style={styles.imageContainer}>
-          <Image
-            source={require("../../assets/images/AeroKonnectSplash.png")}
-            style={[styles.AeroKonnect, { height: height * 0.3 }]} 
-            resizeMode="contain"
-          />
-        </View>
+    <View style={styles.safeArea}>
+      <ImageBackground
+        source={require("../../assets/CityBG.png")}
+        style={styles.backgroundImage}
+      >
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          <View style={styles.textContainer}>
+            <Text style={styles.text}>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. {"\n"}
+              Nunc vulputate libero et velit interdum, ac aliquet odio mattis.{"\n"}
+              Class aptent taciti sociosqu ad litora torquent per conubia nostra,{"\n"}
+              per inceptos himenaeos.
+            </Text>
+          </View>
 
-        <View style={styles.root}>
-          <CustomButton
-            text="Sign up"
-            onPress={onSignUpPressed}
-            bg={"#00527e"}
-            txt={"white"}
-          />
+          <View style={styles.root}>
+            <CustomButton
+              text="Sign up"
+              onPress={onSignUpPressed}
+              bg={"#00527e"}
+              txt={"white"}
+            />
 
-          <CustomButton
-            text="Log In"
-            onPress={onForgotPasswordPressed}
-            bg={"white"}
-            bordercolor="#00527e"
-            txt={"#00527e"}
-          />
-          <HorizontalLine />
+            <CustomButton
+              text="Log In"
+              onPress={onLogInPressed}
+              bg={"transparent"}
+              bordercolor="#00527e"
+              txt={"#00527e"}
+            />
+            <HorizontalLine />
 
-          <CustomImageButton
-            text="Continue With Apple"
-            onPress={onSignInApple}
-            imageSource={require("../../assets/CustomLogoImages/Apple.png")}
-            bgColor={"#00527e"}
-            bordercolor= {"#1f8ac0"}
-            txtColor={"white"}
-          />
+            <CustomImageButton
+              text="Continue With Apple"
+              onPress={onSignInApple}
+              imageSource={require("../../assets/CustomLogoImages/Apple.png")}
+              bgColor={"#E4EAF1"}
+              txtColor={"black"}
+            />
 
-          <CustomImageButton
-            text="Continue With Google"
-            onPress={onSignInGoogle}
-            imageSource={require("../../assets/CustomLogoImages/Google.png")}
-            bgColor={"#00527e"}
-            txtColor={"white"}
-          />
+            <CustomImageButton
+              text="Continue With Google"
+              onPress={onSignInGoogle}
+              imageSource={require("../../assets/CustomLogoImages/Google.png")}
+              bgColor={"#E4EAF1"}
+              txtColor={"black"}
+            />
 
-          <CustomImageButton
-            text="Continue With Facebook"
-            onPress={onSignInFacebook}
-            imageSource={require("../../assets/CustomLogoImages/Facebook.png")}
-            bgColor={"#00527e"}
-            txtColor={"white"}
-          />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+            <CustomImageButton
+              text="Continue With Facebook"
+              onPress={onSignInFacebook}
+              imageSource={require("../../assets/CustomLogoImages/Facebook.png")}
+              bgColor={"#E4EAF1"}
+              txtColor={"black"}
+            />
+          </View>
+        </ScrollView>
+      </ImageBackground>
+    </View>
   );
 };
 
@@ -101,26 +103,31 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#ffffff',
   },
+  backgroundImage: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+  },
   scrollContainer: {
     flexGrow: 1,
     justifyContent: 'flex-start',
   },
-  imageContainer: {
-    alignItems: 'center',
-    marginTop: 10,
-    marginTop:50 
+  textContainer: {
+    marginTop: '25%',
+    paddingHorizontal: 20,
+  },
+  text: {
+    textAlign: 'center',
+    fontSize:20,
+    color: '#00527E',
   },
   root: {
-    alignItems: "center",
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
     padding: 20,
-    marginTop:100
-  },
-  AeroKonnect: {
-    width: '100%',
-    height: undefined,
-    aspectRatio: 1, 
+    paddingBottom: '25%',
   },
 });
 
 export default SignInScreen;
-

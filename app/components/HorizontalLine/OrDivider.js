@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   line: {
     flex: 1,
     height: 1,
-    backgroundColor: '#00527e',
+    backgroundColor: '#ffffff',
   },
   text: {
     marginHorizontal: 10,

@@ -23,8 +23,5 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "white",
   },
-  text_SECONDARY: {
-    color: "#496E2D",
-  },
 });
 export default CustomButton;
