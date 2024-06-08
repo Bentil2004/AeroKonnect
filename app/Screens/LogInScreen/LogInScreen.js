@@ -11,7 +11,7 @@ const LogInScreen = () => {
   const navigation = useNavigation();
 
   const onSignUpPressed = () => {
-    navigation.navigate('SignUp');
+    navigation.navigate('HomeScreen');
   };
 
   const LogInPressed = () => {

@@ -5,11 +5,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import SignInScreen from "../app/Screens/SignInScreen/SignInScreen";
 import SignUpScreen from "../app/Screens/SignUpScreen/SignUpScreen";
-import WelcomeScreen from "../app/Screens/WelcomeScreen/WelcomeScreen";
+import HomeScreen from "../app/Screens/HomeScreen/HomeScreen";
 import NextWelcomeScreen from "../app/Screens/NextWelcomeScreen/NextWelcomeScreen";
 import SplashScreen from "../app/Screens/SplashScreen/SplashScreen";
-import   CompletionScreen from '../app/Screens/CompletionScreen/CompletionScreen';
-
+import CompletionScreen from '../app/Screens/CompletionScreen/CompletionScreen';
 import LogInScreen from "../app/Screens/LogInScreen/LogInScreen"; 
 
 const Stack = createNativeStackNavigator();
@@ -19,7 +18,7 @@ const Stack = createNativeStackNavigator();
     <NavigationContainer>
        <Stack.Navigator screenOptions={{headerShown:false}}>
           <Stack.Screen name='NextWelcome' component={NextWelcomeScreen} />
-          <Stack.Screen name='Welcome' component={WelcomeScreen} />
+          <Stack.Screen name='HomeScreen' component={HomeScreen} />
           <Stack.Screen name='LogIn' component={LogInScreen} />
           <Stack.Screen name='SignIn' component={SignInScreen} />
           <Stack.Screen name='SignUp' component={SignUpScreen} />
