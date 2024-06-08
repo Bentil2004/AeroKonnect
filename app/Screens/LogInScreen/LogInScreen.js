@@ -2,23 +2,23 @@ import React, { useState } from "react";
 import { Text, View, StyleSheet, ScrollView } from "react-native";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
+import { useNavigation } from "@react-navigation/native";
 
 const LogInScreen = () => {
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
   const [PasswordRepeat, setPasswordRepeat] = useState("");
+  const navigation = useNavigation();
 
   const onSignUpPressed = () => {
-    console.warn("Signup");
-  };
-
-  const onTermsandConditionsPressed = () => {
-    console.warn("Terms and Conditions");
+    navigation.navigate('SignUp');
   };
 
   const LogInPressed = () => {
-    console.warn("Log In");
+    navigation.navigate('SignUp');
   };
+
+  
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>

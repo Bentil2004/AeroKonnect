@@ -1,42 +1,33 @@
-import React from "react";
-import { TouchableOpacity, Text, Image, StyleSheet } from "react-native";
+import React from 'react';
+import { TouchableOpacity, Text, Image, View, StyleSheet } from 'react-native';
 
-const CustomImageButton = ({
-  onPress,
-  text,
-  imageSource,
-  bgColor,
-  txtColor,
-}) => {
+const CustomImageButton = ({ text, onPress, imageSource, bgColor, txtColor, style }) => {
   return (
-    <TouchableOpacity
-      style={[styles.button, { backgroundColor: bgColor }]}
-      onPress={onPress}
-    >
-      <Image source={imageSource} style={styles.buttonImage} />
-      <Text style={[styles.buttonText, { color: txtColor }]}>{text}</Text>
+    <TouchableOpacity onPress={onPress} style={[styles.container, { backgroundColor: bgColor }, style]}>
+      <Image source={imageSource} style={styles.image} resizeMode="contain" />
+      <Text style={[styles.text, { color: txtColor }]}>{text}</Text>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  button: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 10,
-    marginVertical: 5,
-    borderRadius: 15,
-    width: "100%",
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 6,
+    paddingHorizontal: 10,
+    paddingVertical: 10,
   },
-  buttonImage: {
-    width: 20,
-    height: 20,
-    marginRight: 10,
+  image: {
+    width: 37,
+    height: 37,
+    marginRight: 8,
   },
-  buttonText: {
+  text: {
     fontSize: 16,
   },
 });
 
 export default CustomImageButton;
+

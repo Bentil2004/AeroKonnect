@@ -1,14 +1,27 @@
-import React from "react";
-import { Text, View, TextInput, StyleSheet } from "react-native";
+import React from 'react';
+import { TextInput, StyleSheet, View } from 'react-native';
+import { Ionicons } from '@expo/vector-icons'; 
 
-const CustomInput = ({ value, setValue , placeholder,secureTextEntry}) => {
+const CustomInput = ({
+  placeholder,
+  value,
+  setValue,
+  secureTextEntry,
+  bordercolor,
+  borderRadius,
+  iconName,
+}) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.inputContainer, {borderColor: bordercolor, borderRadius: borderRadius}]}>
+      <View style={styles.iconContainer}>
+        <Ionicons name={iconName} size={24} color="#7D7D7D" style={styles.icon} />
+      </View>
       <TextInput
-        value= {value}
-        onChangeText={setValue}
-        placeholder={placeholder}
         style={styles.input}
+        placeholder={placeholder}
+        placeholderTextColor="#888"
+        value={value}
+        onChangeText={setValue}
         secureTextEntry={secureTextEntry}
       />
     </View>
@@ -16,17 +29,25 @@ const CustomInput = ({ value, setValue , placeholder,secureTextEntry}) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "white",
-    width: "100%",
-
-    borderColor: "#e8e8e8",
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
     borderWidth: 1,
-    borderRadius: 15,
-
     paddingVertical: 10,
-    paddingHorizontal: 20,
-    marginVertical: 10,
+    paddingHorizontal: 15,
+    marginBottom: 20,
+  },
+  iconContainer: {
+    marginRight: 10,
+  },
+  icon: {
+    marginRight: 10,
+  },
+  input: {
+    flex: 1,
+    fontSize: 16,
+    color: 'black',
   },
 });
+
 export default CustomInput;

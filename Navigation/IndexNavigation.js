@@ -18,13 +18,13 @@ const Stack = createNativeStackNavigator();
    return (
     <NavigationContainer>
        <Stack.Navigator screenOptions={{headerShown:false}}>
+          <Stack.Screen name='NextWelcome' component={NextWelcomeScreen} />
+          <Stack.Screen name='Welcome' component={WelcomeScreen} />
+          <Stack.Screen name='LogIn' component={LogInScreen} />
           <Stack.Screen name='SignIn' component={SignInScreen} />
           <Stack.Screen name='SignUp' component={SignUpScreen} />
           <Stack.Screen name='CompletionScreen' component={CompletionScreen}/>
-          <Stack.Screen name='Welcome' component={WelcomeScreen} />
-          <Stack.Screen name='NextWelcome' component={NextWelcomeScreen} />
           <Stack.Screen name='SplashScreen' component={SplashScreen} />
-          <Stack.Screen name='LogIn' component={LogInScreen} />
        </Stack.Navigator>
     </NavigationContainer>
    )

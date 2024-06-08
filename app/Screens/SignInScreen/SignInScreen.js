@@ -1,44 +1,28 @@
 import React, { useState } from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-  SafeAreaView,
-  ScrollView,
-  ImageBackground,
-} from "react-native";
+import {Text,View,StyleSheet,SafeAreaView, ScrollView,ImageBackground,} from "react-native";
 import CustomButton from "../../components/CustomButton";
-import CustomImageButton from "../../components/CustomImageButton";
-import HorizontalLine from "../../components/HorizontalLine/OrDivider";
+import { useNavigation } from "@react-navigation/native";
+
 
 const SignInScreen = () => {
   const [Username, setUsername] = useState("");
   const [Password, setPassword] = useState("");
+  const navigation = useNavigation();
 
   const onSignUpPressed = () => {
-    console.warn("Signup");
+    navigation.navigate('SignUp');
   };
 
   const onLogInPressed = () => {
-    console.warn("Log In");
+    navigation.navigate("LogIn");
   };
 
-  const onSignInApple = () => {
-    console.warn("Apple Login");
-  };
 
-  const onSignInGoogle = () => {
-    console.warn("Google Login");
-  };
-
-  const onSignInFacebook = () => {
-    console.warn("Facebook Login");
-  };
 
   return (
     <View style={styles.safeArea}>
       <ImageBackground
-        source={require("../../assets/CityBG.png")}
+        source={require("../../assets/AirlineBG.png")}
         style={styles.backgroundImage}
       >
         <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -66,31 +50,6 @@ const SignInScreen = () => {
               bordercolor="#00527e"
               txt={"#00527e"}
             />
-            <HorizontalLine />
-
-            <CustomImageButton
-              text="Continue With Apple"
-              onPress={onSignInApple}
-              imageSource={require("../../assets/CustomLogoImages/Apple.png")}
-              bgColor={"#E4EAF1"}
-              txtColor={"black"}
-            />
-
-            <CustomImageButton
-              text="Continue With Google"
-              onPress={onSignInGoogle}
-              imageSource={require("../../assets/CustomLogoImages/Google.png")}
-              bgColor={"#E4EAF1"}
-              txtColor={"black"}
-            />
-
-            <CustomImageButton
-              text="Continue With Facebook"
-              onPress={onSignInFacebook}
-              imageSource={require("../../assets/CustomLogoImages/Facebook.png")}
-              bgColor={"#E4EAF1"}
-              txtColor={"black"}
-            />
           </View>
         </ScrollView>
       </ImageBackground>
@@ -113,7 +72,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   textContainer: {
-    marginTop: '25%',
+    marginTop: '35%',
     paddingHorizontal: 20,
   },
   text: {
@@ -126,7 +85,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center',
     padding: 20,
-    paddingBottom: '25%',
+    paddingBottom: '40%',
   },
 });
 

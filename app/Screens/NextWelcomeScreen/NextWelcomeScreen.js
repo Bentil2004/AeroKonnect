@@ -1,13 +1,14 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions, SafeAreaView } from 'react-native';
 import React from 'react';
-import CustomButton from "../../components/CustomButton";
+import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions, SafeAreaView } from 'react-native';
+import { useNavigation } from "@react-navigation/native";
 
 const { height, width } = Dimensions.get('window');
 
 const NextWelcomeScreen = () => {
+  const navigation = useNavigation();
 
   const onSkipPressed = () => {
-    console.warn("Skip");
+    navigation.navigate('SignIn');
   };
 
   return (
@@ -17,16 +18,18 @@ const NextWelcomeScreen = () => {
         style={styles.AirplaneBG}
         resizeMode="cover"
       />
-      <TouchableOpacity style={styles.skipButton} onPress={onSkipPressed}>
-        <Text style={styles.skipButtonText}>Skip</Text>
-      </TouchableOpacity>
 
-      
-      <View style={styles.UpperTextContainer}>
-        <Text style={styles.UpperText}>
-         AEROKONNECT{"\n"}
-         <Text style={styles.Slogan}>Seamless  Travels,  Boundless  Horizons</Text>
-          </Text>
+      <View style={styles.touchableWrapper}>
+        <TouchableOpacity style={styles.skipButton} onPress={onSkipPressed}>
+          <Text style={styles.skipButtonText}>Skip</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.upperTextContainer}>
+        <Text style={styles.upperText}>
+          AEROKONNECT{"\n"}
+          <Text style={styles.slogan}>Seamless  Travels,  Boundless  Horizons</Text>
+        </Text>
       </View> 
 
       <View style={styles.bottomTextContainer}>
@@ -34,15 +37,13 @@ const NextWelcomeScreen = () => {
           The Day You will meet your crush at a public rest room what will you do.{"\n"}
           Terms and Conditions.The Boy Who Gave It To Me Last Time Nu.{"\n"}
           The number of Days It Takes for an Elephant to give birth.
-          </Text>
+        </Text>
       </View>
-
     </View>
   );
 }
 
 const styles = StyleSheet.create({
- 
   AirplaneBG: {
     ...StyleSheet.absoluteFillObject,
     width: '100%',
@@ -65,6 +66,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#ffff",
   },
+  touchableWrapper: {
+    ...StyleSheet.absoluteFillObject, 
+    zIndex: 1,
+  },
   skipButton: {
     position: 'absolute',
     top: 50,
@@ -75,11 +80,11 @@ const styles = StyleSheet.create({
     color: '#00527E',
     fontSize: 20,
   },
-  Slogan:{
- alignContent: 'center',
- fontSize: 16,
+  slogan: {
+    alignContent: 'center',
+    fontSize: 16,
   },
-  UpperText:{
+  upperText: {
     fontSize: 24,
     fontWeight: '500',
     color:'#00527E',

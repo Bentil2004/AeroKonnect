@@ -21,12 +21,12 @@ const styles = StyleSheet.create({
   line: {
     flex: 1,
     height: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#E4EAF1',
   },
   text: {
     marginHorizontal: 10,
     fontSize: 16,
-    color: '#00527e',
+    color: '#1877F2',
   },
 });
 
