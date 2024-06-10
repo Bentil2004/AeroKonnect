@@ -1,24 +1,60 @@
 import React, { useState } from "react";
-import { Text, View, StyleSheet, ScrollView } from "react-native";
+import { Text, View, StyleSheet, ScrollView, Dimensions } from "react-native";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
 
+const { height } = Dimensions.get("window");
+
 const LogInScreen = () => {
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
-  const [PasswordRepeat, setPasswordRepeat] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const navigation = useNavigation();
 
+  const validateEmail = (email) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  };
+
+  const validatePassword = (password) => {
+    return password.length >= 8;
+  };
+
+  const validateForm = () => {
+    let valid = true;
+
+    if (!validateEmail(Email)) {
+      setEmailError("Please enter a valid email address");
+      valid = false;
+    } else {
+      setEmailError("");
+    }
+
+    if (!validatePassword(Password)) {
+      setPasswordError("Password must be at least 8 characters long");
+      valid = false;
+    } else {
+      setPasswordError("");
+    }
+
+    return valid;
+  };
+
   const onSignUpPressed = () => {
-    navigation.navigate('HomeScreen');
+    if (validateForm()) {
+      navigation.navigate('BottomTab');
+    }
   };
 
   const LogInPressed = () => {
-    navigation.navigate('SignUp');
+    navigation.navigate('ForgotPassword');
   };
 
-  
+  const SignUpPressed = () => {
+    navigation.navigate('SignUp');
+  };  
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -29,39 +65,45 @@ const LogInScreen = () => {
           placeholder="Email"
           value={Email}
           setValue={setEmail}
-          bordercolor="black"
+          bordercolor="#7D7D7D"
           borderRadius="15"
           style={styles.input}
+          iconName={"mail"}
         />
+        {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
 
         <CustomInput
           placeholder="Password"
-          value={PasswordRepeat}
-          setValue={setPasswordRepeat}
+          value={Password}
+          setValue={setPassword}
           secureTextEntry={true}
-          bordercolor="black"
+          bordercolor="7D7D7D"
           borderRadius="15"
           style={styles.input}
+          iconName={"lock-closed"}
         />
+        {passwordError ? <Text style={styles.errorText}>{passwordError}</Text> : null}
 
-        <Text style={styles.Link} onPress={LogInPressed}>
+        <Text style={styles.link} onPress={LogInPressed}>
           Forgot your password?
         </Text>
 
-        <CustomButton
-          text="Next"
-          onPress={onSignUpPressed}
-          bg={"#00527e"}
-          txt={"white"}
-          style={styles.button}
-        />
+        <View style={styles.bottomSection}>
+          <CustomButton
+            text="Next"
+            onPress={onSignUpPressed}
+            bg={"#00527e"}
+            txt={"white"}
+            style={styles.button}
+          />
 
-        <Text style={styles.text}>
-          Don't have an account?{" "}
-          <Text style={styles.Link} onPress={LogInPressed}>
-            Sign Up
+          <Text style={styles.text}>
+            Don't have an account? {""}
+            <Text style={styles.link} onPress={SignUpPressed}>
+              Sign Up
+            </Text>
           </Text>
-        </Text>
+        </View>
       </View>
     </ScrollView>
   );
@@ -80,27 +122,31 @@ const styles = StyleSheet.create({
   input: {
     marginBottom: 20, 
   },
-  button: {
-    marginVertical: 20, 
-  },
-  Link: {
+  link: {
     color: "#00527e",
+    alignSelf: 'flex-end',
+    marginBottom: 20,
+  },
+  button: {
+    marginVertical: 20,
   },
   text: {
     textAlign: "center",
     marginTop: 20, 
   },
-  bottomTextContainer: {
-    alignItems: "center",
-    padding: 20,
-  },
-  bottomText: {
-    textAlign: "center",
-  },
   title: {
     fontSize: 24,
     fontWeight: "500",
     marginBottom: 20,
+  },
+  bottomSection: {
+    marginTop: height * 0.15, 
+    width: '100%',
+    alignItems: 'center',
+  },
+  errorText: {
+    color: 'red',
+    marginTop: -10,
   },
 });
 

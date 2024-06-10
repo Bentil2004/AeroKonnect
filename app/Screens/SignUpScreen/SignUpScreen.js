@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Text, View, StyleSheet, ScrollView, useWindowDimensions } from "react-native";
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
-
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
@@ -15,6 +14,9 @@ const SignUpScreen = () => {
   const [PasswordRepeat, setPasswordRepeat] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordRepeat, setShowPasswordRepeat] = useState(false);
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [passwordRepeatError, setPasswordRepeatError] = useState("");
   const navigation = useNavigation();
   const { width, height } = useWindowDimensions();
   const isLandscape = width > height;
@@ -27,12 +29,50 @@ const SignUpScreen = () => {
     setShowPasswordRepeat(!showPasswordRepeat);
   };
 
+  const validateEmail = (email) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  };
+
+  const validatePassword = (password) => {
+    return password.length >= 8;
+  };
+
+  const validateForm = () => {
+    let valid = true;
+
+    if (!validateEmail(Email)) {
+      setEmailError("Please enter a valid email address");
+      valid = false;
+    } else {
+      setEmailError("");
+    }
+
+    if (!validatePassword(Password)) {
+      setPasswordError("Password must be at least 8 characters long");
+      valid = false;
+    } else {
+      setPasswordError("");
+    }
+
+    if (Password !== PasswordRepeat) {
+      setPasswordRepeatError("Passwords do not match");
+      valid = false;
+    } else {
+      setPasswordRepeatError("");
+    }
+
+    return valid;
+  };
+
   const onSignUpPressed = () => {
-    navigation.navigate('LogIn');
+    if (validateForm()) {
+      navigation.navigate('LogIn');
+    }
   };
 
   const onTermsandConditionsPressed = () => {
-    console.warn("Terms and Conditions");
+    navigation.navigate('TermsAndConditions');
   };
 
   const LogInPressed = () => {
@@ -65,10 +105,11 @@ const SignUpScreen = () => {
             value={Email}
             setValue={setEmail}
             bordercolor="#7D7D7D"
-            borderRadius="15"
+            borderRadius={15}
             iconName={"mail"}
           />
         </View>
+        {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
 
         <View style={styles.passwordInputContainer}>
           <CustomInput
@@ -77,7 +118,7 @@ const SignUpScreen = () => {
             setValue={setPassword}
             secureTextEntry={!showPassword}
             bordercolor="#7D7D7D"
-            borderRadius="15"
+            borderRadius={15}
             iconName={"lock-closed"}
           />
           <MaterialCommunityIcons
@@ -88,6 +129,7 @@ const SignUpScreen = () => {
             onPress={togglePasswordVisibility}
           />
         </View>
+        {passwordError ? <Text style={styles.errorText}>{passwordError}</Text> : null}
 
         <View style={styles.passwordInputContainer}>
           <CustomInput
@@ -96,7 +138,7 @@ const SignUpScreen = () => {
             setValue={setPasswordRepeat}
             secureTextEntry={!showPasswordRepeat}
             bordercolor="#7D7D7D"
-            borderRadius="10"
+            borderRadius={15}
             iconName={"lock-closed"}
           />
           <MaterialCommunityIcons
@@ -107,6 +149,7 @@ const SignUpScreen = () => {
             onPress={togglePasswordRepeatVisibility}
           />
         </View>
+        {passwordRepeatError ? <Text style={styles.errorText}>{passwordRepeatError}</Text> : null}
 
         <CustomButton
           text="Next"
@@ -143,7 +186,7 @@ const SignUpScreen = () => {
       </View>
 
       <Text style={styles.text}>
-        Already have an account?{" "}
+        Already have an account?{"\n"}
         <Text style={styles.Link} onPress={LogInPressed}>
           Log in
         </Text>
@@ -165,7 +208,7 @@ const styles = StyleSheet.create({
   scrollContainer: {
     flexGrow: 1,
     justifyContent: "space-between",
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
   },
   root: {
     alignItems: "center",
@@ -181,12 +224,12 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   imageButton: {
-    width: 114,
+    width: 100,
     height: 65,
     marginHorizontal: 3,
     borderRadius: 6,
     gap: 0.8,
-    padding: 10,
+    padding:10,
     opacity: 1,
   },
   Link: {
@@ -233,16 +276,17 @@ const styles = StyleSheet.create({
   eyeIcon: {
     marginLeft: -35,
     alignItems: 'center',
-  },
-  icon: {
-    marginRight: 10,
+    marginTop: -20,
   },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 20,
   },
+  errorText: {
+    color: 'red',
+    marginTop: -30,
+  },
 });
 
 export default SignUpScreen;
-

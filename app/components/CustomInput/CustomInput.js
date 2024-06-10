@@ -16,6 +16,8 @@ const CustomInput = ({
       <View style={styles.iconContainer}>
         <Ionicons name={iconName} size={24} color="#7D7D7D" style={styles.icon} />
       </View>
+
+
       <TextInput
         style={styles.input}
         placeholder={placeholder}
@@ -33,8 +35,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
+    width: "100%",
     paddingVertical: 10,
-    paddingHorizontal: 15,
+    paddingHorizontal: 10,
     marginBottom: 20,
   },
   iconContainer: {
