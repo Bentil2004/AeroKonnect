@@ -1,12 +1,16 @@
 import React, { useState } from "react";
-import { Text, View, StyleSheet, ScrollView, useWindowDimensions } from "react-native";
+import { Text, View, StyleSheet, ScrollView, useWindowDimensions, Alert } from "react-native";
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
-
+import * as AuthSession from 'expo-auth-session';
+import * as AppleAuthentication from 'expo-apple-authentication';
+import { LoginManager, AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
 import HorizontalLine from "../../components/HorizontalLine/OrDivider";
 import CustomImageButton from "../../components/CustomImageButton";
+
+const GOOGLE_CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID';
 
 const SignUpScreen = () => {
   const [Email, setEmail] = useState("");
@@ -79,16 +83,78 @@ const SignUpScreen = () => {
     navigation.navigate('LogIn');
   };
 
-  const onSignInApple = () => {
-    console.warn("Apple Login");
+  const onSignInApple = async () => {
+    try {
+      const credential = await AppleAuthentication.signInAsync({
+        requestedScopes: [AppleAuthentication.AppleAuthenticationScope.FULL_NAME, AppleAuthentication.AppleAuthenticationScope.EMAIL],
+      });
+      console.log('Apple login success:', credential);
+    } catch (error) {
+      console.error('Apple login error:', error);
+      Alert.alert('Error', 'Failed to sign in with Apple');
+    }
   };
 
-  const onSignInGoogle = () => {
-    console.warn("Google Login");
+  const onSignInGoogle = async () => {
+    try {
+      const redirectUrl = AuthSession.getRedirectUrl();
+      const result = await AuthSession.startAsync({
+        authUrl:
+          `https://accounts.google.com/o/oauth2/v2/auth?response_type=code` +
+          `&client_id=${GOOGLE_CLIENT_ID}` +
+          `&redirect_uri=${encodeURIComponent(redirectUrl)}` +
+          `&scope=openid%20profile%20email`,
+      });
+
+      if (result.type === 'success') {
+        console.log('Google login success:', result.params);
+      } else if (result.type === 'cancel') {
+        console.log('Google login canceled');
+      }
+    } catch (error) {
+      console.error('Google login error:', error);
+      Alert.alert('Error', 'Failed to sign in with Google');
+    }
   };
 
-  const onSignInFacebook = () => {
-    console.warn("Facebook Login");
+  const onSignInFacebook = async () => {
+    try {
+      const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
+
+      if (result.isCancelled) {
+        console.log('Facebook login canceled');
+      } else {
+        const data = await AccessToken.getCurrentAccessToken();
+
+        if (!data) {
+          throw new Error('Something went wrong obtaining access token');
+        }
+
+        const accessToken = data.accessToken.toString();
+        const responseInfoCallback = (error, result) => {
+          if (error) {
+            console.log(error);
+            Alert.alert('Error', 'Failed to fetch user info');
+          } else {
+            console.log('Facebook login success:', result);
+          }
+        };
+
+        const infoRequest = new GraphRequest('/me', {
+          accessToken: accessToken,
+          parameters: {
+            fields: {
+              string: 'id, name, email',
+            },
+          },
+        }, responseInfoCallback);
+
+        new GraphRequestManager().addRequest(infoRequest).start();
+      }
+    } catch (error) {
+      console.error('Facebook login error:', error);
+      Alert.alert('Error', 'Failed to sign in with Facebook');
+    }
   };
 
   return (
