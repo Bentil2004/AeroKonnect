@@ -12,7 +12,7 @@ const CustomInput = ({
   iconName,
 }) => {
   return (
-    <View style={[styles.inputContainer, {borderColor: bordercolor, borderRadius: borderRadius}]}>
+    <View style={[styles.inputContainer, {borderColor: bordercolor, borderRadius: Number(borderRadius)}]}>
       <View style={styles.iconContainer}>
         <Ionicons name={iconName} size={24} color="#7D7D7D" style={styles.icon} />
       </View>

@@ -3,6 +3,7 @@ import {
   StyleSheet,
   Text,
   View,
+  SafeAreaView,
   Dimensions,
   TouchableOpacity,
   ScrollView,
@@ -10,7 +11,6 @@ import {
   Image,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { SafeAreaView } from "react-native-safe-area-context";
 import CustomInput from "../../components/CustomInput";
 import { useNavigation } from "@react-navigation/native";
 import { data, data2, data3 } from "../../Data";
@@ -59,6 +59,7 @@ const HomeScreen = () => {
           <CustomInput
             placeholder="Search for your next destination"
             bordercolor="#7D7D7D"
+            borderRadius="7"
             iconName="search"
             icon={
               <MaterialCommunityIcons
