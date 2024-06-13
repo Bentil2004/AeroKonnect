@@ -34,9 +34,8 @@ const NextWelcomeScreen = () => {
 
       <View style={styles.bottomTextContainer}>
         <Text style={styles.bottomText}>
-          The Day You will meet your crush at a public rest room what will you do.{"\n"}
-          Terms and Conditions.The Boy Who Gave It To Me Last Time Nu.{"\n"}
-          The number of Days It Takes for an Elephant to give birth.
+        Book. Fly. Enjoy. Discover new Destinations Effortless reservations ,{"\n"} 
+        Tailored experiences just for you.Your Adventure Awaits!
         </Text>
       </View>
     </View>

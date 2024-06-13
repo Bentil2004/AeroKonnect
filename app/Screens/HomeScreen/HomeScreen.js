@@ -27,7 +27,7 @@ const HomeScreen = () => {
   const renderItem = ({ item }) => (
     <TouchableOpacity
       onPress={() => {
-        /* Handle image press */
+          navigation.navigate("PopularDestination",{destination: item});
       }}
     >
       <Image source={item.imageUrl} style={styles.image} />

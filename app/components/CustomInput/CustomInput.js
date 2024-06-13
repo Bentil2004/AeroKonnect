@@ -12,11 +12,10 @@ const CustomInput = ({
   iconName,
 }) => {
   return (
-    <View style={[styles.inputContainer, {borderColor: bordercolor, borderRadius: Number(borderRadius)}]}>
+    <View style={[styles.inputContainer, { borderColor: bordercolor, borderRadius: Number(borderRadius) }]}>
       <View style={styles.iconContainer}>
         <Ionicons name={iconName} size={24} color="#7D7D7D" style={styles.icon} />
       </View>
-
 
       <TextInput
         style={styles.input}
@@ -35,7 +34,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
-    width: "100%",
+    width: '100%',
     paddingVertical: 10,
     paddingHorizontal: 10,
     marginBottom: 20,

@@ -69,9 +69,9 @@ const SignUpScreen = () => {
     return valid;
   };
 
-  const onSignUpPressed = () => {
+  const onSignUpDetailsPressed = () => {
     if (validateForm()) {
-      navigation.navigate('LogIn');
+      navigation.navigate('SignUpDetails');
     }
   };
 
@@ -170,7 +170,7 @@ const SignUpScreen = () => {
             placeholder="Email"
             value={Email}
             setValue={setEmail}
-            bordercolor="#7D7D7D"
+            bordercolor={passwordError ? "red" : "#7D7D7D"}
             borderRadius={15}
             iconName={"mail"}
           />
@@ -183,7 +183,7 @@ const SignUpScreen = () => {
             value={Password}
             setValue={setPassword}
             secureTextEntry={!showPassword}
-            bordercolor="#7D7D7D"
+            bordercolor={passwordError ? "red" : "#7D7D7D"}
             borderRadius={15}
             iconName={"lock-closed"}
           />
@@ -203,7 +203,7 @@ const SignUpScreen = () => {
             value={PasswordRepeat}
             setValue={setPasswordRepeat}
             secureTextEntry={!showPasswordRepeat}
-            bordercolor="#7D7D7D"
+            bordercolor={passwordError? "red" : "#7D7D7D"}
             borderRadius={15}
             iconName={"lock-closed"}
           />
@@ -219,7 +219,7 @@ const SignUpScreen = () => {
 
         <CustomButton
           text="Next"
-          onPress={onSignUpPressed}
+          onPress={onSignUpDetailsPressed}
           bg={"#00527e"}
           txt={"white"}
         />

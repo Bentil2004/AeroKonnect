@@ -7,8 +7,8 @@ import { useNavigation } from "@react-navigation/native";
 const { height } = Dimensions.get("window");
 
 const LogInScreen = () => {
-  const [Email, setEmail] = useState("");
-  const [Password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const navigation = useNavigation();
@@ -25,14 +25,14 @@ const LogInScreen = () => {
   const validateForm = () => {
     let valid = true;
 
-    if (!validateEmail(Email)) {
+    if (!validateEmail(email)) {
       setEmailError("Please enter a valid email address");
       valid = false;
     } else {
       setEmailError("");
     }
 
-    if (!validatePassword(Password)) {
+    if (!validatePassword(password)) {
       setPasswordError("Password must be at least 8 characters long");
       valid = false;
     } else {
@@ -48,13 +48,13 @@ const LogInScreen = () => {
     }
   };
 
-  const LogInPressed = () => {
+  const logInPressed = () => {
     navigation.navigate('ForgotPassword');
   };
 
-  const SignUpPressed = () => {
+  const signUpPressed = () => {
     navigation.navigate('SignUp');
-  };  
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -63,28 +63,26 @@ const LogInScreen = () => {
 
         <CustomInput
           placeholder="Email"
-          value={Email}
+          value={email}
           setValue={setEmail}
-          bordercolor="#7D7D7D"
-          borderRadius="15"
-          style={styles.input}
-          iconName={"mail"}
+          bordercolor={emailError ? "red" : "#7D7D7D"}
+          borderRadius={15}
+          iconName="mail"
         />
         {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
 
         <CustomInput
           placeholder="Password"
-          value={Password}
+          value={password}
           setValue={setPassword}
           secureTextEntry={true}
-          bordercolor="7D7D7D"
-          borderRadius="15"
-          style={styles.input}
-          iconName={"lock-closed"}
+          bordercolor={passwordError ? "red" : "#7D7D7D"}
+          borderRadius={15}
+          iconName="lock-closed"
         />
         {passwordError ? <Text style={styles.errorText}>{passwordError}</Text> : null}
 
-        <Text style={styles.link} onPress={LogInPressed}>
+        <Text style={styles.link} onPress={logInPressed}>
           Forgot your password?
         </Text>
 
@@ -92,14 +90,14 @@ const LogInScreen = () => {
           <CustomButton
             text="Next"
             onPress={onSignUpPressed}
-            bg={"#00527e"}
-            txt={"white"}
+            bg="#00527e"
+            txt="white"
             style={styles.button}
           />
 
           <Text style={styles.text}>
             Don't have an account? {""}
-            <Text style={styles.link} onPress={SignUpPressed}>
+            <Text style={styles.link} onPress={signUpPressed}>
               Sign Up
             </Text>
           </Text>
@@ -146,7 +144,8 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: 'red',
-    marginTop: -10,
+    marginTop: 5,
+    marginBottom: 10,
   },
 });
 

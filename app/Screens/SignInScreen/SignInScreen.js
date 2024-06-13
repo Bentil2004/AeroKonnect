@@ -28,10 +28,12 @@ const SignInScreen = () => {
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           <View style={styles.textContainer}>
             <Text style={styles.text}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. {"\n"}
-              Nunc vulputate libero et velit interdum, ac aliquet odio mattis.{"\n"}
-              Class aptent taciti sociosqu ad litora torquent per conubia nostra,{"\n"}
-              per inceptos himenaeos.
+            Welcome to AeroKonnect!{"\n"}
+            Your Adventure Begins Here!{"\n"}
+            Book flights in seconds{"\n"}
+            Manage your trips effortlessly{"\n"}
+            AeroKonnect - Seamless {"\n"}
+            travels,boundless horizons.. Ready to take off?
             </Text>
           </View>
 
