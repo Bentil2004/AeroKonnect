@@ -35,7 +35,7 @@ const PhoneNumberVerificationScreen = ({ route, navigation }) => {
   const handleVerifyCode = () => {
     const code = verificationCode.join('');
     console.warn('Verification code entered:', code);
-    navigation.navigate('LogIn');
+    navigation.navigate('CompletionScreen');
   };
 
   const handleResend = () => {
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   resendText: {
-    color: 'green',
+    color: '#A8E78A',
     fontSize: 16,
     textDecorationLine: 'underline',
   },

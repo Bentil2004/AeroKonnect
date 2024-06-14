@@ -1,13 +1,45 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, ScrollView, TextInput, Modal, Platform } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, ScrollView, TextInput, Modal } from "react-native";
 import { FontAwesome5 } from '@expo/vector-icons';
 import CustomButton from "../../components/CustomButton";
 
+const PastTrips = ({ trips }) => (
+  <View style={styles.tripsContainer}>
+    {trips.length === 0 ? (
+      <Text style={styles.noFlightText}>No past trips available</Text>
+    ) : (
+      trips.map((trip, index) => (
+        <View key={index} style={styles.tripDetails}>
+          <Text style={styles.tripText}>Booking Code: {trip.reservationCode}</Text>
+          <Text style={styles.tripText}>Surname: {trip.surname}</Text>
+        </View>
+      ))
+    )}
+  </View>
+);
+
+const UpcomingTrips = ({ trips }) => (
+  <View style={styles.tripsContainer}>
+    {trips.length === 0 ? (
+      <Text style={styles.noFlightText}>No upcoming trips available</Text>
+    ) : (
+      trips.map((trip, index) => (
+        <View key={index} style={styles.tripDetails}>
+          <Text style={styles.tripText}>Booking Code: {trip.reservationCode}</Text>
+          <Text style={styles.tripText}>Surname: {trip.surname}</Text>
+        </View>
+      ))
+    )}
+  </View>
+);
+
 const MyTripScreen = ({ navigation }) => {
-  const [selectedButton, setSelectedButton] = useState(null);
+  const [selectedButton, setSelectedButton] = useState("Upcoming");
   const [isModalVisible, setModalVisible] = useState(false);
   const [reservationCode, setReservationCode] = useState("");
   const [surname, setSurname] = useState("");
+  const [pastTrips, setPastTrips] = useState([]);
+  const [upcomingTrips, setUpcomingTrips] = useState([]);
 
   const handlePress = (button) => {
     setSelectedButton(button);
@@ -22,8 +54,14 @@ const MyTripScreen = ({ navigation }) => {
   };
 
   const handleAddTrip = () => {
-    // Handle adding the trip here
-    console.log(`Trip Name: ${reservationCode}, Reservation Code: ${surname}`);
+    const newTrip = { reservationCode, surname };
+    if (selectedButton === "Past") {
+      setPastTrips([...pastTrips, newTrip]);
+    } else {
+      setUpcomingTrips([...upcomingTrips, newTrip]);
+    }
+    setReservationCode("");
+    setSurname("");
     toggleModal();
   };
 
@@ -51,6 +89,9 @@ const MyTripScreen = ({ navigation }) => {
             <Text style={[styles.buttonText, selectedButton === "Upcoming" && styles.selectedText]}>Upcoming</Text>
           </TouchableOpacity>
         </View>
+        
+        {selectedButton === "Past" ? <PastTrips trips={pastTrips} /> : <UpcomingTrips trips={upcomingTrips} />}
+
         <View style={styles.bookNowButtonContainer}>
           <CustomButton 
             text="Book Now"
@@ -73,10 +114,12 @@ const MyTripScreen = ({ navigation }) => {
           </TouchableOpacity>
           <Text style={styles.Text}> to view your trip</Text>
         </View>
-        <View style={styles.noFlightContainer}>
-          <FontAwesome5 name="plane-slash" size={50} color="#00527E" />
-          <Text style={styles.noFlightText}>No trip available</Text>
-        </View>
+        {pastTrips.length === 0 && upcomingTrips.length === 0 && (
+          <View style={styles.noFlightContainer}>
+            <FontAwesome5 name="plane-slash" size={50} color="#00527E" />
+            <Text style={styles.noFlightText}>No trip available</Text>
+          </View>
+        )}
       </ScrollView>
 
       <Modal
@@ -173,7 +216,7 @@ const styles = StyleSheet.create({
   },
   selectedButton: {
     backgroundColor: "#00527E",
-    borderRadius:8
+    borderRadius: 8,
   },
   buttonText: {
     fontSize: 16,
@@ -188,8 +231,8 @@ const styles = StyleSheet.create({
   bookNowButtonContainer: {
     position: 'absolute',
     bottom: "35%", 
-    width : 381,
-    height : 67,
+    width: 381,
+    height: 67,
     left: 0,
     right: 0,
     alignItems: 'center',
@@ -242,6 +285,20 @@ const styles = StyleSheet.create({
   modalButton: {
     width: "100%",
     marginVertical: 5,
+  },
+  tripsContainer: {
+    width: '100%',
+    padding: 20,
+  },
+  tripText: {
+    fontSize: 16,
+    color: '#333',
+  },
+  tripDetails: {
+    backgroundColor: "#f1f1f1",
+    padding: 10,
+    marginVertical: 5,
+    borderRadius: 5,
   },
 });
 

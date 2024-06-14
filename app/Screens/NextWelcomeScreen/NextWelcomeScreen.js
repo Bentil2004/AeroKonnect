@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 
 const { height, width } = Dimensions.get('window');
@@ -11,6 +11,10 @@ const NextWelcomeScreen = () => {
     navigation.navigate('SignIn');
   };
 
+  const onHomePressed = () => {
+    navigation.navigate('BottomTab');
+  };
+
   return (
     <View style={styles.container}>
       <Image
@@ -19,24 +23,27 @@ const NextWelcomeScreen = () => {
         resizeMode="cover"
       />
 
-      <View style={styles.touchableWrapper}>
-        <TouchableOpacity style={styles.skipButton} onPress={onSkipPressed}>
-          <Text style={styles.skipButtonText}>Skip</Text>
-        </TouchableOpacity>
-      </View>
-
       <View style={styles.upperTextContainer}>
         <Text style={styles.upperText}>
           AEROKONNECT{"\n"}
-          <Text style={styles.slogan}>Seamless  Travels,  Boundless  Horizons</Text>
+          <Text style={styles.slogan}>Seamless Travels, Boundless Horizons</Text>
         </Text>
-      </View> 
+      </View>
 
       <View style={styles.bottomTextContainer}>
         <Text style={styles.bottomText}>
-        Book. Fly. Enjoy. Discover new Destinations Effortless reservations ,{"\n"} 
-        Tailored experiences just for you.Your Adventure Awaits!
+          Book. Fly. Enjoy. Discover new Destinations. Effortless reservations,{"\n"} 
+          Tailored experiences just for you. Your Adventure Awaits!
         </Text>
+      </View>
+
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.button} onPress={onSkipPressed}>
+          <Text style={styles.buttonText}>Join As Now</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={onHomePressed}>
+          <Text style={styles.buttonText}>Go To Home</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -47,16 +54,16 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     width: '100%',
     height: '100%',
-    resizeMode:"cover"
+    resizeMode: "cover"
   },
   bottomText: {
     textAlign: 'center',
-    color:'#00527E',
+    color: '#00527E',
     fontSize: 16,
   },
   bottomTextContainer: {
     position: 'absolute',
-    bottom: '20%', 
+    bottom: '20%',
     left: '10%',
     width: '80%',
     borderRadius: 5,
@@ -65,19 +72,24 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#ffff",
   },
-  touchableWrapper: {
-    ...StyleSheet.absoluteFillObject, 
-    zIndex: 1,
-  },
-  skipButton: {
+  buttonContainer: {
     position: 'absolute',
-    top: 50,
-    right: 20,
-    padding: 10,
+    bottom: '10%',
+    left: '10%',
+    width: '80%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
-  skipButtonText: {
-    color: '#00527E',
-    fontSize: 20,
+  button: {
+    backgroundColor: '#00527E',
+    padding: 10,
+    borderRadius: 5,
+    width: '45%',
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
   },
   slogan: {
     alignContent: 'center',
@@ -86,7 +98,7 @@ const styles = StyleSheet.create({
   upperText: {
     fontSize: 24,
     fontWeight: '500',
-    color:'#00527E',
+    color: '#00527E',
     textAlign: 'center',
     marginTop: 100,
     alignContent: 'center',

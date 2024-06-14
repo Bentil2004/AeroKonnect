@@ -1,6 +1,7 @@
 import React from 'react';
 import { SafeAreaView, Text, TouchableOpacity, View, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/MaterialIcons'; // Adjust icon package as needed
 
 const ForgotPasswordScreen = () => {
   const navigation = useNavigation();
@@ -22,10 +23,16 @@ const ForgotPasswordScreen = () => {
         <Text style={styles.title}>Forgot password</Text>
         <Text style={styles.subtitle}>Please how would you like to reset your password?</Text>
         <TouchableOpacity style={styles.optionButton} onPress={handleEmailPress}>
-          <Text style={styles.optionButtonText}>Reset via Email</Text>
+          <View style={styles.optionButtonContent}>
+            <Icon name="email" size={24} color="#00527e" style={styles.icon} />
+            <Text style={styles.optionButtonText}>Reset via Email</Text>
+          </View>
         </TouchableOpacity>
         <TouchableOpacity style={styles.optionButton} onPress={handlePhonePress}>
-          <Text style={styles.optionButtonText}>Reset via Phone</Text>
+          <View style={styles.optionButtonContent}>
+            <Icon name="phone" size={24} color="#00527e" style={styles.icon} />
+            <Text style={styles.optionButtonText}>Reset via Phone</Text>
+          </View>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -66,6 +73,13 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignItems: 'center',
     marginVertical: 10,
+  },
+  optionButtonContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  icon: {
+    marginRight: 10,
   },
   optionButtonText: {
     color: '#00527e',

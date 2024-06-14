@@ -18,6 +18,11 @@ const EmailVerificationScreen = () => {
     }
   };
 
+  const resendCode = () => {
+    // Here you can implement the actual logic to resend the code
+    Alert.alert('Code Sent', 'A new verification code has been sent to your email.');
+  };
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
@@ -37,6 +42,12 @@ const EmailVerificationScreen = () => {
         <TouchableOpacity style={styles.button} onPress={verifyCode}>
           <Text style={styles.buttonText}>Verify Code</Text>
         </TouchableOpacity>
+        <View style={styles.resendContainer}>
+          <Text style={styles.resendText}>Haven't gotten the code yet? </Text>
+          <TouchableOpacity onPress={resendCode}>
+            <Text style={styles.resendButtonText}>Resend Mail</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -91,6 +102,20 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
+    fontSize: 16,
+  },
+  resendContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  resendText: {
+    color: 'gray',
+    fontSize: 14,
+  },
+  resendButtonText: {
+    color: '#00527E',
     fontSize: 16,
   },
 });

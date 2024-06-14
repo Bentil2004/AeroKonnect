@@ -1,57 +1,97 @@
-// ResetPasswordScreen.js
-
-import React, { useState } from 'react';
-import { SafeAreaView, Text, TextInput, TouchableOpacity, View, StyleSheet, Alert } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import React, { useState } from "react";
+import {
+  SafeAreaView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  StyleSheet,
+  Alert,
+} from "react-native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 const ResetPasswordScreen = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const { email, phoneNumber } = route.params;
 
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isPasswordReset, setIsPasswordReset] = useState(false);
 
   const resetPassword = () => {
     if (password !== confirmPassword) {
-      Alert.alert('Password Mismatch', 'Passwords do not match.');
+      Alert.alert("Password Mismatch", "Passwords do not match.");
       return;
     }
 
-    navigation.navigate('CompletionScreen');
+    // Simulate a password reset action
+    setIsPasswordReset(true);
+    setTimeout(() => {
+      setIsPasswordReset(false);
+      navigation.navigate("LogIn");
+    }, 2000); // Show the message for 2 seconds
   };
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-        <Text style={styles.title}>Reset Password</Text>
-        <Text style={styles.subtitle}>Resetting password for {email || phoneNumber}</Text>
+        <Text style={styles.title}>Set A New Password</Text>
+        <Text style={styles.subtitle}>
+          Create a new password. Ensure it differs from{"\n"} previous ones for security
+        </Text>
         <View style={styles.inputContainer}>
-          <Icon name="lock" size={20} color="#707070" style={styles.icon} />
+          <TouchableOpacity
+            onPress={() => setShowPassword(!showPassword)}
+            style={styles.iconContainer}
+          >
+            <Icon
+              name={showPassword ? "eye-off" : "eye"}
+              size={20}
+              color="#707070"
+            />
+          </TouchableOpacity>
           <TextInput
             placeholder="New Password"
             placeholderTextColor="#707070"
             style={styles.input}
             value={password}
             onChangeText={setPassword}
-            secureTextEntry
+            secureTextEntry={!showPassword}
           />
         </View>
         <View style={styles.inputContainer}>
-          <Icon name="lock" size={20} color="#707070" style={styles.icon} />
+          <TouchableOpacity
+            onPress={() => setShowConfirmPassword(!showConfirmPassword)}
+            style={styles.iconContainer}
+          >
+            <Icon
+              name={showConfirmPassword ? "eye-off" : "eye"}
+              size={20}
+              color="#707070"
+            />
+          </TouchableOpacity>
           <TextInput
             placeholder="Confirm Password"
             placeholderTextColor="#707070"
             style={styles.input}
             value={confirmPassword}
             onChangeText={setConfirmPassword}
-            secureTextEntry
+            secureTextEntry={!showConfirmPassword}
           />
         </View>
         <TouchableOpacity style={styles.button} onPress={resetPassword}>
-          <Text style={styles.buttonText}>Reset Password</Text>
+          <Text style={styles.buttonText}>Update Password</Text>
         </TouchableOpacity>
+        {isPasswordReset && (
+          <View style={styles.successContainer}>
+            <Icon name="check-circle" size={50} color="green" />
+            <Text style={styles.successText}>Password has been successfully reset</Text>
+          </View>
+        )}
       </View>
     </SafeAreaView>
   );
@@ -61,35 +101,35 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     backgroundColor: "#ffffff",
-    justifyContent: 'flex-start',
-    alignItems: 'center',
+    justifyContent: "flex-start",
+    alignItems: "center",
   },
   container: {
     marginTop: 80,
-    width: '80%',
+    width: "80%",
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 20,
-    textAlign: 'center',
+    textAlign: "center",
   },
   subtitle: {
     fontSize: 16,
-    color: 'gray',
+    color: "gray",
     marginBottom: 20,
-    textAlign: 'center',
+    textAlign: "center",
   },
   inputContainer: {
-    width: '100%',
+    width: "100%",
     marginBottom: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderRadius: 5,
   },
-  icon: {
+  iconContainer: {
     padding: 10,
   },
   input: {
@@ -97,16 +137,25 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   button: {
-    width: '100%',
+    width: "100%",
     padding: 15,
-    backgroundColor: '#add8e6',
+    backgroundColor: "#add8e6",
     borderRadius: 5,
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 30,
   },
   buttonText: {
-    color: 'white',
+    color: "white",
     fontSize: 16,
+  },
+  successContainer: {
+    marginTop: 20,
+    alignItems: "center",
+  },
+  successText: {
+    color: "green",
+    fontSize: 16,
+    marginTop: 10,
   },
 });
 

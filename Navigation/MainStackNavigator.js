@@ -18,8 +18,8 @@ import Notification from '../app/Screens/Notification/Notification';
 import PhoneNumberVerificationScreen from '../app/Screens/PhoneNumberVerification/PhoneNumberVerificationScreen';
 import PhoneNumberVerificationScreenForgotPassword from '../app/Screens/PhoneNumberVerificationForgotPassword/PhoneNumberVerificationScreenForgotPassword';
 import EmailVerificationScreen from '../app/Screens/EmailVerification/EmailVerificationScreen';
-
 import ResetPasswordScreen from '../app/Screens/ResetPasswordScreen/ResetPasswordScreen';
+
 
 const Stack = createNativeStackNavigator();
 
