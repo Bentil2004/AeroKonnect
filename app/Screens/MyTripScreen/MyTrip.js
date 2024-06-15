@@ -82,7 +82,7 @@ const MyTripScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.safeContainer}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
-        <Text style={styles.text}>MY TRIP</Text>
+        <Text style={styles.text}>MY TRIP Learnig Git Hub</Text>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={[
