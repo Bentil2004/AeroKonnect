@@ -20,17 +20,19 @@ const ForgotPassword = ({ navigation }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
 
   const validatePhoneNumber = (phoneNumber) => {
-    const phoneRegex = /^\d{10}$/; 
+    const phoneRegex = /^\d{10}$/;
     return phoneRegex.test(phoneNumber);
   };
 
-  const OnContinuePressed = () => {
+  const onContinuePressed = () => {
     if (!validatePhoneNumber(phoneNumber)) {
       Alert.alert("Invalid Phone Number", "Please enter a valid phone number.");
       return;
     }
     navigation.navigate("PhoneNumberVerificationForgotPassword", { phoneNumber });
   };
+
+  const isPhoneNumberEmpty = phoneNumber.length === 0;
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -52,7 +54,11 @@ const ForgotPassword = ({ navigation }) => {
             autoCapitalize="none"
           />
         </View>
-        <TouchableOpacity style={styles.button} onPress={OnContinuePressed}>
+        <TouchableOpacity
+          style={[styles.button, isPhoneNumberEmpty ? styles.buttonInitial : styles.buttonFilled]}
+          onPress={onContinuePressed}
+          disabled={isPhoneNumberEmpty} 
+        >
           <Text style={styles.buttonText}>Continue</Text>
         </TouchableOpacity>
       </View>
@@ -75,10 +81,10 @@ const styles = StyleSheet.create({
   backButtonText: {
     color: '#007bff',
     fontSize: 20,
-    marginTop: 30
+    marginTop: 30,
   },
   container: {
-    marginTop: 80, 
+    marginTop: 80,
     width: '80%',
   },
   title: {
@@ -86,7 +92,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 20,
     top: 20,
-    textAlign: 'left',  
+    textAlign: 'left',
   },
   subtitle: {
     fontSize: 16,
@@ -114,10 +120,15 @@ const styles = StyleSheet.create({
   button: {
     width: '100%',
     padding: 15,
-    backgroundColor: '#add8e6',
     borderRadius: 5,
     alignItems: 'center',
     marginTop: 30,
+  },
+  buttonInitial: {
+    backgroundColor: '#add8e6', 
+  },
+  buttonFilled: {
+    backgroundColor: '#00527E', 
   },
   buttonText: {
     color: 'white',

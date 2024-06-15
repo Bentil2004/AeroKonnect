@@ -1,7 +1,7 @@
 import React from 'react';
 import { SafeAreaView, Text, TouchableOpacity, View, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/MaterialIcons'; // Adjust icon package as needed
+import Icon from 'react-native-vector-icons/MaterialIcons'; 
 
 const ForgotPasswordScreen = () => {
   const navigation = useNavigation();

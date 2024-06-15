@@ -1,6 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Animated } from 'react-native';
 
 import HomeScreen from '../app/Screens/HomeScreen/HomeScreen';
 import ExploreScreen from '../app/Screens/ExploreScreen/ExploreScreen';
@@ -10,6 +11,14 @@ import MyTripScreen from '../app/Screens/MyTripScreen/MyTrip';
 const Tab = createBottomTabNavigator();
 
 const BottomTabNavigator = () => {
+  const scrollY = new Animated.Value(0);
+
+  const tabBarOpacity = scrollY.interpolate({
+    inputRange: [0, 200],
+    outputRange: [1, 0.2],
+    extrapolate: 'clamp',
+  });
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -31,9 +40,22 @@ const BottomTabNavigator = () => {
         headerShown: false,
         tabBarActiveTintColor: '#00527E',
         tabBarInactiveTintColor: 'gray',
+        tabBarStyle: {
+          backgroundColor: 'rgba(255, 255, 255, 0.9)',
+          position: 'absolute',
+          borderTopWidth: 0,
+        },
       })}
+      tabBarOptions={{
+        style: {
+          position: 'absolute',
+          backgroundColor: 'rgba(255, 255, 255, 0.9)',
+        },
+      }}
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Home">
+        {props => <HomeScreen {...props} scrollY={scrollY} />}
+      </Tab.Screen>
       <Tab.Screen name="Explore" component={ExploreScreen} />
       <Tab.Screen name="My Trip" component={MyTripScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />

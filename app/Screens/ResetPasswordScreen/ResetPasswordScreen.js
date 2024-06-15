@@ -22,19 +22,30 @@ const ResetPasswordScreen = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isPasswordReset, setIsPasswordReset] = useState(false);
 
+  const validatePassword = (password) => {
+    return password.length >= 8;
+  };
+
   const resetPassword = () => {
     if (password !== confirmPassword) {
       Alert.alert("Password Mismatch", "Passwords do not match.");
       return;
     }
 
-    // Simulate a password reset action
+    if (!validatePassword(password)) {
+      Alert.alert("Weak Password", "Password must be at least 8 characters long.");
+      return;
+    }
+
+   
     setIsPasswordReset(true);
     setTimeout(() => {
       setIsPasswordReset(false);
       navigation.navigate("LogIn");
-    }, 2000); // Show the message for 2 seconds
+    }, 2000); 
   };
+
+  const isFormIncomplete = password.length < 1 || confirmPassword.length < 1 || password !== confirmPassword;
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -83,7 +94,11 @@ const ResetPasswordScreen = () => {
             secureTextEntry={!showConfirmPassword}
           />
         </View>
-        <TouchableOpacity style={styles.button} onPress={resetPassword}>
+        <TouchableOpacity
+          style={[styles.button, isFormIncomplete ? styles.buttonInitial : styles.buttonFilled]}
+          onPress={resetPassword}
+          disabled={isFormIncomplete} 
+        >
           <Text style={styles.buttonText}>Update Password</Text>
         </TouchableOpacity>
         {isPasswordReset && (
@@ -139,10 +154,15 @@ const styles = StyleSheet.create({
   button: {
     width: "100%",
     padding: 15,
-    backgroundColor: "#add8e6",
     borderRadius: 5,
     alignItems: "center",
     marginTop: 30,
+  },
+  buttonInitial: {
+    backgroundColor: "#add8e6", 
+  },
+  buttonFilled: {
+    backgroundColor: "#00527E", 
   },
   buttonText: {
     color: "white",

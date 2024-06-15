@@ -1,7 +1,9 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, ScrollView, TextInput, Modal } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, ScrollView, TextInput, Modal, Dimensions } from "react-native";
 import { FontAwesome5 } from '@expo/vector-icons';
 import CustomButton from "../../components/CustomButton";
+
+const { width, height } = Dimensions.get('window');
 
 const PastTrips = ({ trips }) => (
   <View style={styles.tripsContainer}>
@@ -40,6 +42,18 @@ const MyTripScreen = ({ navigation }) => {
   const [surname, setSurname] = useState("");
   const [pastTrips, setPastTrips] = useState([]);
   const [upcomingTrips, setUpcomingTrips] = useState([]);
+
+  useEffect(() => {
+    const handleOrientationChange = () => {
+      const { width: newWidth, height: newHeight } = Dimensions.get('window');
+      // Implement logic based on new width and height if needed
+    };
+
+    Dimensions.addEventListener('change', handleOrientationChange);
+    return () => {
+      Dimensions.removeEventListener('change', handleOrientationChange);
+    };
+  }, []);
 
   const handlePress = (button) => {
     setSelectedButton(button);
@@ -303,3 +317,4 @@ const styles = StyleSheet.create({
 });
 
 export default MyTripScreen;
+

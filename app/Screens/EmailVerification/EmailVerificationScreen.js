@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SafeAreaView, Text, TextInput, TouchableOpacity, View, StyleSheet, Alert } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -8,7 +8,7 @@ const EmailVerificationScreen = () => {
   const route = useRoute();
   const { email } = route.params;
 
-  const [verificationCode, setVerificationCode] = React.useState('');
+  const [verificationCode, setVerificationCode] = useState('');
 
   const verifyCode = () => {
     if (verificationCode === '1234') { 
@@ -19,9 +19,10 @@ const EmailVerificationScreen = () => {
   };
 
   const resendCode = () => {
-    // Here you can implement the actual logic to resend the code
     Alert.alert('Code Sent', 'A new verification code has been sent to your email.');
   };
+
+  const isVerificationCodeEmpty = verificationCode.length === 0;
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -39,7 +40,11 @@ const EmailVerificationScreen = () => {
             keyboardType="numeric"
           />
         </View>
-        <TouchableOpacity style={styles.button} onPress={verifyCode}>
+        <TouchableOpacity
+          style={[styles.button, isVerificationCodeEmpty ? styles.buttonInitial : styles.buttonFilled]}
+          onPress={verifyCode}
+          disabled={isVerificationCodeEmpty} 
+        >
           <Text style={styles.buttonText}>Verify Code</Text>
         </TouchableOpacity>
         <View style={styles.resendContainer}>
@@ -95,10 +100,15 @@ const styles = StyleSheet.create({
   button: {
     width: '100%',
     padding: 15,
-    backgroundColor: '#add8e6',
     borderRadius: 5,
     alignItems: 'center',
     marginTop: 30,
+  },
+  buttonInitial: {
+    backgroundColor: '#add8e6', 
+  },
+  buttonFilled: {
+    backgroundColor: '#00527E', 
   },
   buttonText: {
     color: 'white',

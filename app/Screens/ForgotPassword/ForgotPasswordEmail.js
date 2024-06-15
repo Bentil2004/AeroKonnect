@@ -24,13 +24,15 @@ const ForgotPassword = ({ navigation }) => {
     return emailRegex.test(email);
   };
 
-  const OnContinuePressed = () => {
+  const onContinuePressed = () => {
     if (!validateEmail(email)) {
       Alert.alert("Invalid Email", "Please enter a valid email address.");
       return;
     }
     navigation.navigate("EmailVerification", { email });
   };
+
+  const isEmailEmpty = email.length === 0;
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -52,7 +54,11 @@ const ForgotPassword = ({ navigation }) => {
             autoCapitalize="none"
           />
         </View>
-        <TouchableOpacity style={styles.button} onPress={OnContinuePressed}>
+        <TouchableOpacity
+          style={[styles.button, isEmailEmpty ? styles.buttonInitial : styles.buttonFilled]}
+          onPress={onContinuePressed}
+          disabled={isEmailEmpty} 
+        >
           <Text style={styles.buttonText}>Continue</Text>
         </TouchableOpacity>
       </View>
@@ -114,10 +120,15 @@ const styles = StyleSheet.create({
   button: {
     width: '100%',
     padding: 15,
-    backgroundColor: '#add8e6',
     borderRadius: 5,
     alignItems: 'center',
     marginTop: 30,
+  },
+  buttonInitial: {
+    backgroundColor: '#add8e6',
+  },
+  buttonFilled: {
+    backgroundColor: '#00527E', 
   },
   buttonText: {
     color: 'white',

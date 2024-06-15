@@ -19,7 +19,6 @@ const PhoneNumberVerificationScreenForgotPassword = () => {
   };
 
   const resendCode = () => {
-    // Here you can implement the actual logic to resend the code
     Alert.alert('Code Sent', 'A new verification code has been sent to your phone number.');
   };
 
@@ -39,7 +38,11 @@ const PhoneNumberVerificationScreenForgotPassword = () => {
             keyboardType="numeric"
           />
         </View>
-        <TouchableOpacity style={styles.button} onPress={verifyCode}>
+        <TouchableOpacity
+          style={[styles.button, verificationCode ? styles.buttonFilled : styles.buttonInitial]}
+          onPress={verifyCode}
+          disabled={!verificationCode} 
+        >
           <Text style={styles.buttonText}>Verify Code</Text>
         </TouchableOpacity>
         <View style={styles.resendContainer}>
@@ -95,10 +98,15 @@ const styles = StyleSheet.create({
   button: {
     width: '100%',
     padding: 15,
-    backgroundColor: '#add8e6',
     borderRadius: 5,
     alignItems: 'center',
     marginTop: 30,
+  },
+  buttonInitial: {
+    backgroundColor: '#add8e6', 
+  },
+  buttonFilled: {
+    backgroundColor: '#00527E', 
   },
   buttonText: {
     color: 'white',
@@ -117,7 +125,7 @@ const styles = StyleSheet.create({
   resendButtonText: {
     color: '#00527E',
     fontSize: 16,
-    },
+  },
 });
 
 export default PhoneNumberVerificationScreenForgotPassword;

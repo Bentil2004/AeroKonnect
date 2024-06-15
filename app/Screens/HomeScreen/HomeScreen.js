@@ -1,15 +1,5 @@
-import React, { useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  SafeAreaView,
-  Dimensions,
-  TouchableOpacity,
-  ScrollView,
-  FlatList,
-  Image,
-} from "react-native";
+import React, { useState, useRef } from "react";
+import { StyleSheet, Text, View, SafeAreaView, Dimensions, TouchableOpacity, FlatList, Image, Animated } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import CustomInput from "../../components/CustomInput";
 import { useNavigation } from "@react-navigation/native";
@@ -21,6 +11,10 @@ const { height } = Dimensions.get("window");
 const HomeScreen = () => {
   const navigation = useNavigation();
   const [likedItems, setLikedItems] = useState({});
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredData, setFilteredData] = useState(null); 
+
+  const scrollY = useRef(new Animated.Value(0)).current; 
 
   const onBellOutlinePressed = () => {
     navigation.navigate("Notification");
@@ -33,7 +27,19 @@ const HomeScreen = () => {
     }));
   };
 
+  // Search Queries
+  const updateSearch = (text) => {
+    setSearchQuery(text);
+    // Filter data based on search query
+    const filtered = data.concat(data2, data3, recreationalSitesData).filter(item =>
+      item.name.toLowerCase().includes(text.toLowerCase())
+    );
+    setFilteredData(filtered.length > 0 ? filtered : null);
+  };
+
   const renderItem = ({ item }) => (
+    <View>
+    <View style={styles.itemContainer}>
     <TapGestureHandler
       onHandlerStateChange={({ nativeEvent }) => {
         if (nativeEvent.state === State.ACTIVE) {
@@ -42,24 +48,30 @@ const HomeScreen = () => {
       }}
       numberOfTaps={2}
     >
-      <View style={styles.itemContainer}>
-        <Image source={item.imageUrl} style={styles.image} />
-        <TouchableOpacity
-          style={[
-            styles.heartIcon,
-            likedItems[item.id] && styles.heartIconLiked,
-          ]}
-        >
-          <MaterialCommunityIcons
-            name="heart"
-            size={24}
-            color={likedItems[item.id] ? "red" : "white"}
-          />
-        </TouchableOpacity>
-        <Text>{item.name}</Text>
-        <Text>Price ${item.id}</Text>
-      </View>
+      <View>
+          <Image source={item.imageUrl} style={styles.image} />
+          <TouchableOpacity
+            style={[
+              styles.heartIcon,
+              likedItems[item.id] && styles.heartIconLiked,
+            ]}
+          >
+            <MaterialCommunityIcons
+              name="heart"
+              size={18}
+              color={likedItems[item.id] ? "red" : "white"}
+            />
+          </TouchableOpacity>
+          </View>
     </TapGestureHandler>
+    <TouchableOpacity
+        onPress={() => navigation.navigate('PopularDestination', { destination: item })}
+      >
+          <Text>{item.name}</Text>
+          <Text>Price ${item.id}</Text>
+      </TouchableOpacity>
+        </View>
+    </View>
   );
 
   const getKeyExtractor = (prefix) => (item) => `${prefix}-${item.id}`;
@@ -84,60 +96,85 @@ const HomeScreen = () => {
             borderRadius="7"
             iconName="search"
             icon={<MaterialCommunityIcons name="magnify" size={20} color="#7D7D7D" />}
+            onChangeText={updateSearch} // Update search query on input change
           />
         </View>
 
-        <ScrollView contentContainerStyle={styles.scrollContainer}>
-          {/* First FlatList */}
-          <Text style={styles.sectionTitle}>Popular Destinations</Text>
-          <FlatList
-            data={data}
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-            keyExtractor={getKeyExtractor("popular")}
-            renderItem={renderItem}
-            contentContainerStyle={styles.flatListContainer}
-          />
+        <Animated.ScrollView
+          contentContainerStyle={styles.scrollContainer}
+          onScroll={Animated.event(
+            [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+            { useNativeDriver: true }
+          )}
+          scrollEventThrottle={16}
+        >
+          {/* Render filtered or original data based on search */}
+          {searchQuery.length > 0 && filteredData ? (
+            <>
+              <Text style={styles.sectionTitle}>Search Results</Text>
+              <FlatList
+                data={filteredData}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                keyExtractor={getKeyExtractor("search")}
+                renderItem={renderItem}
+                contentContainerStyle={styles.flatListContainer}
+              />
+            </>
+          ) : (
+            <>
+              {/* First FlatList */}
+              <Text style={styles.sectionTitle}>Popular Destinations</Text>
+              <FlatList
+                data={data}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                keyExtractor={getKeyExtractor("popular")}
+                renderItem={renderItem}
+                contentContainerStyle={styles.flatListContainer}
+              />
 
-          {/* Second FlatList */}
-          <Text style={styles.sectionTitle}>Good Deals Just For You</Text>
-          <Text style={styles.writing}>
-            Save 20% on Flights to Europe! Book your summer getaway now
-          </Text>
-          <FlatList
-            data={data2}
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-            keyExtractor={getKeyExtractor("deals")}
-            renderItem={renderItem}
-            contentContainerStyle={styles.flatListContainer}
-          />
+              {/* Second FlatList */}
+              <Text style={styles.sectionTitle}>Good Deals Just For You</Text>
+              <Text style={styles.writing}>
+                Save 20% on Flights to Europe! Book your summer getaway now
+              </Text>
+              <FlatList
+                data={data2}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                keyExtractor={getKeyExtractor("deals")}
+                renderItem={renderItem}
+                contentContainerStyle={styles.flatListContainer}
+              />
 
-          {/* Third FlatList */}
-          <Text style={styles.sectionTitle}>Trip Inscription</Text>
-          <Text style={styles.writing}>
-            Experience the world through new cultures and breathtaking landscapes.
-          </Text>
-          <FlatList
-            data={data3}
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-            keyExtractor={getKeyExtractor("trips")}
-            renderItem={renderItem}
-            contentContainerStyle={styles.flatListContainer}
-          />
+              {/* Third FlatList */}
+              <Text style={styles.sectionTitle}>Trip Inscription</Text>
+              <Text style={styles.writing}>
+                Experience the world through new cultures and breathtaking landscapes.
+              </Text>
+              <FlatList
+                data={data3}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                keyExtractor={getKeyExtractor("trips")}
+                renderItem={renderItem}
+                contentContainerStyle={styles.flatListContainer}
+              />
 
-          {/* Fourth FlatList */}
-          <Text style={styles.sectionTitle}>Recreational Sites Around the World</Text>
-          <FlatList
-            data={recreationalSitesData}
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-            keyExtractor={getKeyExtractor("recreational")}
-            renderItem={renderItem}
-            contentContainerStyle={styles.flatListContainer}
-          />
-        </ScrollView>
+              {/* Fourth FlatList */}
+              <Text style={styles.sectionTitle}>Recreational Sites Around the World</Text>
+              <FlatList
+                data={recreationalSitesData}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                keyExtractor={getKeyExtractor("recreational")}
+                renderItem={renderItem}
+                contentContainerStyle={styles.flatListContainer}
+              />
+            </>
+          )}
+        </Animated.ScrollView>
       </SafeAreaView>
     </GestureHandlerRootView>
   );

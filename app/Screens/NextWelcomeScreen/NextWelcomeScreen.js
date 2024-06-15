@@ -39,7 +39,7 @@ const NextWelcomeScreen = () => {
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={onSkipPressed}>
-          <Text style={styles.buttonText}>Join As Now</Text>
+          <Text style={styles.buttonText}>Join Us Now</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={onHomePressed}>
           <Text style={styles.buttonText}>Go To Home</Text>
