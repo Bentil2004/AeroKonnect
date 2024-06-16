@@ -23,6 +23,12 @@ import PopularDestinationScreen from "../app/Screens/PopularDestination /Popular
 import MyTripScreen from "../app/Screens/MyTripScreen/MyTrip";
 import UpcomingTripsScreen from "../app/Screens/MyTripScreen/UpcomingTripsScreen";
 import ToDoScreen from "../app/Screens/PopularDestination /ToDoScreen";
+import PaymentMethodsScreen from "../app/Screens/ProfileScreen/PaymentMethodsScreen";
+import ProfileScreen from "../app/Screens/ProfileScreen/ProfileScreen"; 
+import MyAccount from "../app/Screens/ProfileScreen/MyAccount";
+import MyAccountUser from "../app/Screens/ProfileScreen/MyAccountUser";
+import ManageAccount from "../app/Screens/ProfileScreen/ManageAccount";
+import ProfileDetails from "../app/Screens/ProfileScreen/ProfileDetails";
 
 const Stack = createNativeStackNavigator();
 
@@ -39,6 +45,11 @@ const MainStackNavigator = () => {
         <Stack.Screen name="MyTripScreen" component={MyTripScreen} />
         <Stack.Screen name="UpcomingTrips" component={UpcomingTripsScreen} />
         <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
+        <Stack.Screen name="PaymentMethods" component={PaymentMethodsScreen} />
+        <Stack.Screen name="MyAccounts" component={MyAccount} />
+        <Stack.Screen name="MyAccountUser" component={MyAccountUser} />
+        <Stack.Screen name="ManageAccount" component={ManageAccount} />
+        <Stack.Screen name="ProfileDetails" component={ProfileDetails} />
         <Stack.Screen
           name="ForgotPasswordEmail"
           component={ForgotPasswordEmail}
@@ -72,6 +83,7 @@ const MainStackNavigator = () => {
           component={PopularDestinationScreen}
         />
         <Stack.Screen name="ToDo" component={ToDoScreen} />
+        <Stack.Screen name="Profile" component={ProfileScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
