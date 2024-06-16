@@ -19,10 +19,10 @@ import PhoneNumberVerificationScreen from "../app/Screens/PhoneNumberVerificatio
 import PhoneNumberVerificationScreenForgotPassword from "../app/Screens/PhoneNumberVerificationForgotPassword/PhoneNumberVerificationScreenForgotPassword";
 import EmailVerificationScreen from "../app/Screens/EmailVerification/EmailVerificationScreen";
 import ResetPasswordScreen from "../app/Screens/ResetPasswordScreen/ResetPasswordScreen";
-import PopularDestinationScreen from "../app/Screens/PopularDestination /PopularDestinationScreen";
+import PopularDestinationScreen from "../app/Screens/PopularDestination/PopularDestinationScreen";
 import MyTripScreen from "../app/Screens/MyTripScreen/MyTrip";
 import UpcomingTripsScreen from "../app/Screens/MyTripScreen/UpcomingTripsScreen";
-import ToDoScreen from "../app/Screens/PopularDestination /ToDoScreen";
+import ToDoScreen from "../app/Screens/PopularDestination/ToDoScreen";
 import PaymentMethodsScreen from "../app/Screens/ProfileScreen/PaymentMethodsScreen";
 import ProfileScreen from "../app/Screens/ProfileScreen/ProfileScreen"; 
 import MyAccount from "../app/Screens/ProfileScreen/MyAccount";
