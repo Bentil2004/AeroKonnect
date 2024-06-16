@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, ScrollView, TextInput, Modal, Dimensions } from "react-native";
 import { FontAwesome5 } from '@expo/vector-icons';
 import CustomButton from "../../components/CustomButton";
 
 const { width, height } = Dimensions.get('window');
 
-const PastTrips = ({ trips }) => (
+const UpcomingTrips = ({ trips }) => (
   <View style={styles.tripsContainer}>
     {trips.length === 0 ? (
-      <Text style={styles.noFlightText}>No past trips available</Text>
+      <Text style={styles.noFlightText}>No upcoming trips available</Text>
     ) : (
       trips.map((trip, index) => (
         <View key={index} style={styles.tripDetails}>
@@ -20,32 +20,14 @@ const PastTrips = ({ trips }) => (
   </View>
 );
 
-const MyTripScreen = ({ navigation }) => {
-  const [selectedButton, setSelectedButton] = useState("Past");
+const UpcomingTripsScreen = ({ navigation }) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [reservationCode, setReservationCode] = useState("");
   const [surname, setSurname] = useState("");
-  const [pastTrips, setPastTrips] = useState([]);
   const [upcomingTrips, setUpcomingTrips] = useState([]);
 
-  useEffect(() => {
-    const handleOrientationChange = () => {
-      const { width: newWidth, height: newHeight } = Dimensions.get('window');
-      // Implement logic based on new width and height if needed
-    };
-
-    const subscription = Dimensions.addEventListener('change', handleOrientationChange);
-
-    return () => {
-      subscription?.remove();
-    };
-  }, []);
-
-  const handlePress = (button) => {
-    setSelectedButton(button);
-    if (button === "Upcoming") {
-      navigation.navigate("UpcomingTrips");
-    }
+  const handleMyTripPress = () => {
+    navigation.navigate("MyTripScreen");
   };
 
   const handleSignIn = () => {
@@ -58,9 +40,7 @@ const MyTripScreen = ({ navigation }) => {
 
   const handleAddTrip = () => {
     const newTrip = { reservationCode, surname };
-    if (selectedButton === "Past") {
-      setPastTrips([...pastTrips, newTrip]);
-    }
+    setUpcomingTrips([...upcomingTrips, newTrip]);
     setReservationCode("");
     setSurname("");
     toggleModal();
@@ -69,29 +49,27 @@ const MyTripScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.safeContainer}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
-        <Text style={styles.text}>MY Trip</Text>
+        <Text style={styles.text}>MY TRIP</Text>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={[
               styles.button,
-              selectedButton === "Past" && styles.selectedButton
             ]}
-            onPress={() => handlePress("Past")}
+            onPress={handleMyTripPress}
           >
-            <Text style={[styles.buttonText, selectedButton === "Past" && styles.selectedText]}>Past</Text>
+            <Text style={[styles.buttonText, styles.selectedText]}>Past</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[
               styles.button,
-              selectedButton === "Upcoming" && styles.selectedButton
+              styles.selectedButton
             ]}
-            onPress={() => handlePress("Upcoming")}
           >
-            <Text style={[styles.buttonText, selectedButton === "Upcoming" && styles.selectedText]}>Upcoming</Text>
+            <Text style={[styles.buttonText]}>Upcoming</Text>
           </TouchableOpacity>
         </View>
         
-        {selectedButton === "Past" && <PastTrips trips={pastTrips} />}
+        <UpcomingTrips trips={upcomingTrips} />
 
         <View style={styles.bookNowButtonContainer}>
           <CustomButton 
@@ -115,7 +93,7 @@ const MyTripScreen = ({ navigation }) => {
           </TouchableOpacity>
           <Text style={styles.Text}> to view your trip</Text>
         </View> */}
-        {pastTrips.length === 0 && upcomingTrips.length === 0 && (
+        {upcomingTrips.length === 0 && (
           <View style={styles.noFlightContainer}>
             <FontAwesome5 name="plane-slash" size={50} color="#00527E" />
             <Text style={styles.noFlightText}>No trip available</Text>
@@ -222,12 +200,12 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 16,
     fontWeight: "bold",
-    color: "black",
+    color: "white",
   },
   selectedText: {
     fontSize: 16,
     fontWeight: "bold",
-    color: "white",
+    color: "black",
   },
   bookNowButtonContainer: {
     position: 'absolute',
@@ -302,4 +280,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MyTripScreen;
+export default UpcomingTripsScreen;

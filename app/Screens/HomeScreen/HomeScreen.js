@@ -39,42 +39,46 @@ const HomeScreen = () => {
 
   const renderItem = ({ item }) => (
     <View>
-    <View style={styles.itemContainer}>
-    <TapGestureHandler
-      onHandlerStateChange={({ nativeEvent }) => {
-        if (nativeEvent.state === State.ACTIVE) {
-          handleDoubleTap(item.id);
-        }
-      }}
-      numberOfTaps={2}
-    >
-      <View>
-          <Image source={item.imageUrl} style={styles.image} />
-          <TouchableOpacity
-            style={[
-              styles.heartIcon,
-              likedItems[item.id] && styles.heartIconLiked,
-            ]}
-          >
-            <MaterialCommunityIcons
-              name="heart"
-              size={18}
-              color={likedItems[item.id] ? "red" : "white"}
-            />
-          </TouchableOpacity>
+      <View style={styles.itemContainer}>
+        <TapGestureHandler
+          onHandlerStateChange={({ nativeEvent }) => {
+            if (nativeEvent.state === State.ACTIVE) {
+              handleDoubleTap(item.id);
+            }
+          }}
+          numberOfTaps={2}
+        >
+          <View>
+            <Image source={item.imageUrl} style={styles.image} />
+            <TouchableOpacity
+              style={[
+                styles.heartIcon,
+                likedItems[item.id] && styles.heartIconLiked,
+              ]}
+            >
+              <MaterialCommunityIcons
+                name="heart"
+                size={18}
+                color={likedItems[item.id] ? "red" : "white"}
+              />
+            </TouchableOpacity>
           </View>
-    </TapGestureHandler>
-    <TouchableOpacity
-        onPress={() => navigation.navigate('PopularDestination', { destination: item })}
-      >
+        </TapGestureHandler>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('PopularDestination', { destination: item })}
+        >
           <Text>{item.name}</Text>
           <Text>Price ${item.id}</Text>
-      </TouchableOpacity>
-        </View>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 
   const getKeyExtractor = (prefix) => (item) => `${prefix}-${item.id}`;
+
+  const navigateToChatScreen = () => {
+    navigation.navigate('AIChatScreen');
+  };
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -98,6 +102,9 @@ const HomeScreen = () => {
             icon={<MaterialCommunityIcons name="magnify" size={20} color="#7D7D7D" />}
             onChangeText={updateSearch} // Update search query on input change
           />
+          <TouchableOpacity style={styles.aiIcon} onPress={navigateToChatScreen}> 
+            <Image source={require("../../assets/aiassistant.png")} style={{ width: 60, height: 60 }} />
+          </TouchableOpacity>
         </View>
 
         <Animated.ScrollView
@@ -214,6 +221,7 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     position: "relative",
+    paddingBottom:30,
   },
   image: {
     width: 187,
@@ -242,6 +250,10 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginLeft: 16,
     marginTop: 20,
+  },
+  aiIcon: {
+    marginLeft: 10,
+    padding: 10,
   },
 });
 
