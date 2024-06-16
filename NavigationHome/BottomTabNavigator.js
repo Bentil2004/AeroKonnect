@@ -7,6 +7,7 @@ import HomeScreen from '../app/Screens/HomeScreen/HomeScreen';
 import ExploreScreen from '../app/Screens/ExploreScreen/ExploreScreen';
 import ProfileScreen from '../app/Screens/ProfileScreen/ProfileScreen';
 import MyTripScreen from '../app/Screens/MyTripScreen/MyTrip';
+import MyTripNavigator from './MyTripNavigator';
 
 const Tab = createBottomTabNavigator();
 
@@ -57,7 +58,7 @@ const BottomTabNavigator = () => {
         {props => <HomeScreen {...props} scrollY={scrollY} />}
       </Tab.Screen>
       <Tab.Screen name="Explore" component={ExploreScreen} />
-      <Tab.Screen name="My Trip" component={MyTripScreen} />
+      <Tab.Screen name="My Trip" component={MyTripNavigator} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
   );

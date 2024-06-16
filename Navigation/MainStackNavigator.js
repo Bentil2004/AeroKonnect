@@ -21,6 +21,8 @@ import EmailVerificationScreen from "../app/Screens/EmailVerification/EmailVerif
 import ResetPasswordScreen from "../app/Screens/ResetPasswordScreen/ResetPasswordScreen";
 import PopularDestinationScreen from "../app/Screens/PopularDestination /PopularDestinationScreen";
 import MyTripScreen from "../app/Screens/MyTripScreen/MyTrip";
+import UpcomingTripsScreen from "../app/Screens/MyTripScreen/UpcomingTripsScreen";
+import ToDoScreen from "../app/Screens/PopularDestination /ToDoScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -35,9 +37,16 @@ const MainStackNavigator = () => {
         <Stack.Screen name="BottomTab" component={BottomTabNavigator} />
         <Stack.Screen name="NextWelcome" component={NextWelcomeScreen} />
         <Stack.Screen name="MyTripScreen" component={MyTripScreen} />
+        <Stack.Screen name="UpcomingTrips" component={UpcomingTripsScreen} />
         <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
-        <Stack.Screen name="ForgotPasswordEmail"component={ForgotPasswordEmail}/>
-        <Stack.Screen name="TermsAndConditions"component={TermsAndConditions}/>
+        <Stack.Screen
+          name="ForgotPasswordEmail"
+          component={ForgotPasswordEmail}
+        />
+        <Stack.Screen
+          name="TermsAndConditions"
+          component={TermsAndConditions}
+        />
         <Stack.Screen name="SignIn" component={SignInScreen} />
         <Stack.Screen name="LogIn" component={LogInScreen} />
         <Stack.Screen
@@ -58,7 +67,11 @@ const MainStackNavigator = () => {
           component={EmailVerificationScreen}
         />
         <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} />
-        <Stack.Screen name="PopularDestination" component={PopularDestinationScreen} />
+        <Stack.Screen
+          name="PopularDestination"
+          component={PopularDestinationScreen}
+        />
+        <Stack.Screen name="ToDo" component={ToDoScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

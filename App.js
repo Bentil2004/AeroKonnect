@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import MainStackNavigator from "./Navigation/MainStackNavigator";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
